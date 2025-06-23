@@ -11,7 +11,6 @@ module.exports = {
     port: 3000,
   },
   env: {
-    NEXT_PUBLIC_API_URL:
-      process.env.NEXT_PUBLIC_API_URL || "http://backend:3000",
+    NEXT_PUBLIC_API_URL: "https://brainbytes.onrender.com",
   },
 };

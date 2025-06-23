@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: brainbytes-backend
+    env: docker
+    dockerfilePath: backend/Dockerfile
+    autoDeploy: true
+    startCommand: "node server.js"
+    plan: free
+    envVars:
+      - key: MONGODB_URI
+        value: mongodb://mongo:27017/brainbytes 
+      - key: JWT_SECRET
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+
+  - type: web
+    name: brainbytes-frontend
+    env: docker
+    dockerfilePath: frontend/Dockerfile
+    autoDeploy: true
+    startCommand: "npm run start"
+    plan: free
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        value: https://brainbytes-backend.onrender.com
