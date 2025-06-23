@@ -55,6 +55,13 @@ jobs:
         working-directory: backend
         run: npm ci
 
+      ### 🩺 FIX FOR MONGODB-MEMORY-SERVER ON NODE 16.X (libssl1.1) ###
+      - name: Install libssl1.1 for mongodb-memory-server (Node 16.x)
+        if: matrix.node-version == '16.x'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libssl1.1 || echo 'libssl1.1 not available on this runner'
+
       ### 5️⃣ SETUP DOCKER BUILDX ###
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
