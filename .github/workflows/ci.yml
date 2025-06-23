@@ -66,8 +66,10 @@ jobs:
       - name: Install MongoDB for Node 18.x
         if: matrix.node-version == '18.x'
         run: |
+          wget -qO - https://pgp.mongodb.com/server-6.0.asc | sudo gpg --dearmor -o /usr/share/keyrings/mongodb-server-6.0.gpg
+          echo "deb [ signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu noble/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
           sudo apt-get update
-          sudo apt-get install -y mongodb
+          sudo apt-get install -y mongodb-org
       - name: Set MongoDB binary path for mongodb-memory-server (Node 18.x)
         if: matrix.node-version == '18.x'
         run: echo "MONGOMS_SYSTEM_BINARY=$(which mongod)" >> $GITHUB_ENV
