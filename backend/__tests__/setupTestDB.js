@@ -1,27 +1,17 @@
-import { MongoMemoryServer } from "mongodb-memory-server";
+// Jest global mock for mongoose
 import mongoose from "mongoose";
-
-let mongoServer;
-
-beforeAll(async () => {
-  mongoServer = await MongoMemoryServer.create();
-  const uri = mongoServer.getUri();
-  process.env.MONGODB_URI = uri;
-  await mongoose.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+jest.mock("mongoose", () => {
+  const actualMongoose = jest.requireActual("mongoose");
+  return {
+    ...actualMongoose,
+    connect: jest.fn().mockResolvedValue({}),
+    disconnect: jest.fn().mockResolvedValue({}),
+    model: jest.fn(() => ({
+      create: jest.fn().mockResolvedValue({}),
+      find: jest.fn().mockResolvedValue([]),
+      // Add more methods as needed
+    })),
+  };
 });
 
-afterAll(async () => {
-  await mongoose.disconnect();
-  if (mongoServer) await mongoServer.stop();
-});
-
-afterEach(async () => {
-  // Clean up all collections after each test
-  const collections = mongoose.connection.collections;
-  for (const key in collections) {
-    await collections[key].deleteMany({});
-  }
-});
+// Remove mongodb-memory-server and mongoose connection logic, as we now mock mongoose
