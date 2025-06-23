@@ -1,4 +1,4 @@
-// Polyfill global.Headers for Node 16.x compatibility with @google/genai
+import { Headers } from "node-fetch";
 if (typeof global.Headers === "undefined") {
-  global.Headers = require("node-fetch").Headers;
+  global.Headers = Headers;
 }
