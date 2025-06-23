@@ -6,15 +6,15 @@ on:
   pull_request:
     branches: [master, development]
 
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
 jobs:
   build-test:
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-      issues: write
 
     strategy:
       matrix:
