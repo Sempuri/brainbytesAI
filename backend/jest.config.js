@@ -12,4 +12,5 @@ export default {
   },
   // Make sure ES modules are properly handled
   transformIgnorePatterns: ["/node_modules/(?!(.+\\.mjs$))"],
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
 };

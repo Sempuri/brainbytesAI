@@ -105,6 +105,8 @@ jobs:
         run: npm audit --audit-level=moderate || true
 
       ### 8️⃣ UNIT TESTING ###
+      - name: Set test MongoDB URI
+        run: echo "MONGODB_URI=mongodb://localhost:27017/testdb" >> $GITHUB_ENV
       - name: Run backend unit tests with coverage
         working-directory: backend
         run: npm test -- --coverage
