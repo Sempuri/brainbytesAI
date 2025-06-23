@@ -68,9 +68,9 @@ describe("Home Chat Loading and Error States", () => {
                   sentiment: "",
                 },
               }),
-            100
-          )
-        )
+            100,
+          ),
+        ),
     );
 
     render(<Home />);
@@ -84,14 +84,14 @@ describe("Home Chat Loading and Error States", () => {
 
     // Wait for loading to finish (button returns to "Send")
     await waitFor(() =>
-      expect(screen.getByRole("button", { name: /send/i })).toBeEnabled()
+      expect(screen.getByRole("button", { name: /send/i })).toBeEnabled(),
     );
   });
 
   test("shows error message when API call fails", async () => {
     // First call: reject (simulate error)
     api.post.mockImplementationOnce(() =>
-      Promise.reject(new Error("Network error"))
+      Promise.reject(new Error("Network error")),
     );
     // Second call: resolve with {data: []} to keep state consistent
     api.post.mockImplementationOnce(() => Promise.resolve({ data: [] }));
@@ -105,13 +105,13 @@ describe("Home Chat Loading and Error States", () => {
     // Wait for error message to appear in chat
     await waitFor(() => {
       expect(
-        screen.getByText(/sorry, i couldn't process your request/i)
+        screen.getByText(/sorry, i couldn't process your request/i),
       ).toBeInTheDocument();
     });
 
     // Ensure messages state is still an array (no filter error)
     expect(
-      screen.queryByText(/loading conversation history/i)
+      screen.queryByText(/loading conversation history/i),
     ).not.toBeInTheDocument();
   });
 });

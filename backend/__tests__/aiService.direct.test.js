@@ -43,13 +43,13 @@ describe("detectQuestionType function", () => {
 describe("detectSentiment function", () => {
   test("detects positive sentiment from keywords", () => {
     expect(detectSentiment("This is a great explanation, thank you")).toBe(
-      "positive"
+      "positive",
     );
   });
 
   test("detects negative sentiment from keywords", () => {
     expect(detectSentiment("I am disappointed with this answer")).toBe(
-      "negative"
+      "negative",
     );
   });
 

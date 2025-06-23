@@ -13,14 +13,14 @@ describe("Login Page", () => {
   test("renders the sign-in form", () => {
     render(<Login />);
     expect(
-      screen.getByRole("heading", { name: /sign in/i })
+      screen.getByRole("heading", { name: /sign in/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByPlaceholderText(/you@example\.com/i)
+      screen.getByPlaceholderText(/you@example\.com/i),
     ).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/•+/i)).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /sign in/i })
+      screen.getByRole("button", { name: /sign in/i }),
     ).toBeInTheDocument();
   });
 });

@@ -1,7 +1,11 @@
 # Ignore build outputs
 .next/
-node_modules/
-dist/
-build/
 coverage/
+node_modules/
+frontend/.next/
+frontend/coverage/
+frontend/node_modules/
+backend/coverage/
+backend/node_modules/
 *.log
+cypress/

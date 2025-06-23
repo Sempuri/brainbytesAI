@@ -322,7 +322,7 @@ export default function Dashboard() {
                       }}
                       onClick={() =>
                         router.push(
-                          `/?question=${encodeURIComponent(message.text)}`
+                          `/?question=${encodeURIComponent(message.text)}`,
                         )
                       } // <-- Add this line
                     >

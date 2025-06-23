@@ -428,7 +428,7 @@ function detectSentiment(question) {
       const wordIndex = lower.indexOf(word);
       const precedingText = lower.substring(
         Math.max(0, wordIndex - 20),
-        wordIndex
+        wordIndex,
       );
 
       if (negations.some((neg) => precedingText.includes(neg))) {

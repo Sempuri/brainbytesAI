@@ -101,7 +101,7 @@ export default function Home() {
       const response = await api.post(
         "/api/messages",
         { text: userMsg },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
 
       // Store response metadata
@@ -118,7 +118,7 @@ export default function Home() {
       setMessages((prev) => {
         // Filter out the temporary message
         const filteredMessages = prev.filter(
-          (msg) => msg._id !== tempUserMsg._id
+          (msg) => msg._id !== tempUserMsg._id,
         );
         // Add the real messages from the API
         return [
@@ -204,7 +204,7 @@ export default function Home() {
     if (router.query.question && filteredMessages.length > 0) {
       // Find the first user message that matches the question text in the filtered list
       const found = filteredMessages.find(
-        (msg) => msg.text === router.query.question && msg.isUser
+        (msg) => msg.text === router.query.question && msg.isUser,
       );
       if (found && messageRefs.current[found._id]) {
         messageRefs.current[found._id].scrollIntoView({
@@ -430,7 +430,7 @@ export default function Home() {
                 setSelectedSubject(
                   lastResponse.category === "general"
                     ? "all"
-                    : lastResponse.category
+                    : lastResponse.category,
                 );
                 setShowNotification(false); // Also close notification when clicking View in
               }}

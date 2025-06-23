@@ -7,14 +7,17 @@ This document outlines the testing approach for the BrainBytes AI Tutoring Platf
 ## Testing Levels
 
 ### Unit Testing
+
 - **Frontend**: Test individual React components in isolation
 - **Backend**: Test individual functions and utilities
 
 ### Integration Testing
+
 - Test API endpoints
 - Test database interactions
 
 ### End-to-End Testing
+
 - Test complete user flows (future implementation)
 
 ## Testing Tools
