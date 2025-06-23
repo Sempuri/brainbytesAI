@@ -62,6 +62,16 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libssl1.1 || echo 'libssl1.1 not available on this runner'
 
+      ### 🩺 FIX FOR MONGODB-MEMORY-SERVER ON NODE 18.X (system mongod) ###
+      - name: Install MongoDB for Node 18.x
+        if: matrix.node-version == '18.x'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mongodb
+      - name: Set MongoDB binary path for mongodb-memory-server (Node 18.x)
+        if: matrix.node-version == '18.x'
+        run: echo "MONGOMS_SYSTEM_BINARY=$(which mongod)" >> $GITHUB_ENV
+
       ### 5️⃣ SETUP DOCKER BUILDX ###
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
