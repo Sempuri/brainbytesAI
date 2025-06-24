@@ -1,4 +1,3 @@
-// Polyfill global Request/Response/Headers for Node 16 Jest
 try {
   if (typeof global.Request === "undefined") {
     global.Request = require("node-fetch").Request;
