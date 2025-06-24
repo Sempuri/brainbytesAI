@@ -197,7 +197,7 @@ jobs:
         if: matrix.node-version == '18.x'
         uses: actions/upload-artifact@v4
         with:
-          name: frontend-build
+          name: frontend-build-${{ matrix.node-version }}
           path: frontend/build/
           retention-days: 7
       ### Build artifacts for backend
@@ -214,7 +214,7 @@ jobs:
       - name: Upload backend build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: backend-build
+          name: backend-build-${{ matrix.node-version }}
           path: backend/build/
           retention-days: 7
 
