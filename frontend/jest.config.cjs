@@ -6,8 +6,7 @@ const createJestConfig = nextJest({
 
 const customJestConfig = {
   testEnvironment: "jsdom",
-  // Patch globals before any Next.js code loads
-  setupFiles: ["<rootDir>/jest.global.js", "<rootDir>/jest.polyfill.js"],
+  setupFiles: ["<rootDir>/jest.polyfill.js"],
   setupFilesAfterEnv: ["@testing-library/jest-dom"],
   testPathIgnorePatterns: ["/node_modules/", "/.next/", "/cypress/"],
   moduleNameMapper: {
