@@ -5,7 +5,8 @@ const createJestConfig = nextJest({
 });
 
 const customJestConfig = {
-  testEnvironment: "jsdom",
+  // Use custom environment to polyfill Request/Response/Headers before Next.js loads
+  testEnvironment: "<rootDir>/jest.env.js",
   setupFiles: ["<rootDir>/jest.polyfill.js"],
   setupFilesAfterEnv: ["@testing-library/jest-dom"],
   testPathIgnorePatterns: ["/node_modules/", "/.next/", "/cypress/"],
