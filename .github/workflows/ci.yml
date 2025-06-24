@@ -190,7 +190,7 @@ jobs:
           mkdir -p build
           # Copy the required files to the build directory
           cp -r .next build/
-          cp -r public build/
+          [ -d public ] && cp -r public build/
           cp package.json build/
           cp next.config.js build/
       - name: Upload frontend build artifact
