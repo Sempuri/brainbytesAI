@@ -1,69 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="29" failures="0" errors="0" time="18.901">
-  <testsuite name="detectCategory function" errors="0" failures="0" skipped="0" timestamp="2025-06-22T18:52:41" time="0.728" tests="12">
-    <testcase classname="detectCategory function detects math category from symbols" name="detectCategory function detects math category from symbols" time="0.012">
+<testsuites name="jest tests" tests="29" failures="0" errors="0" time="2.036">
+  <testsuite name="detectCategory function" errors="0" failures="0" skipped="0" timestamp="2025-06-24T00:54:20" time="0.596" tests="12">
+    <testcase classname="detectCategory function detects math category from symbols" name="detectCategory function detects math category from symbols" time="0.01">
     </testcase>
-    <testcase classname="detectCategory function detects science category from keywords" name="detectCategory function detects science category from keywords" time="0.005">
+    <testcase classname="detectCategory function detects science category from keywords" name="detectCategory function detects science category from keywords" time="0.003">
     </testcase>
-    <testcase classname="detectCategory function detects science from specialized terms" name="detectCategory function detects science from specialized terms" time="0.001">
+    <testcase classname="detectCategory function detects science from specialized terms" name="detectCategory function detects science from specialized terms" time="0">
     </testcase>
-    <testcase classname="detectCategory function returns general for unknown topics" name="detectCategory function returns general for unknown topics" time="0">
+    <testcase classname="detectCategory function returns general for unknown topics" name="detectCategory function returns general for unknown topics" time="0.001">
     </testcase>
-    <testcase classname="detectQuestionType function detects definition type questions" name="detectQuestionType function detects definition type questions" time="0.002">
+    <testcase classname="detectQuestionType function detects definition type questions" name="detectQuestionType function detects definition type questions" time="0.006">
     </testcase>
-    <testcase classname="detectQuestionType function detects explanation type questions" name="detectQuestionType function detects explanation type questions" time="0.001">
+    <testcase classname="detectQuestionType function detects explanation type questions" name="detectQuestionType function detects explanation type questions" time="0">
     </testcase>
     <testcase classname="detectQuestionType function detects example type questions" name="detectQuestionType function detects example type questions" time="0">
     </testcase>
-    <testcase classname="detectQuestionType function detects calculation type questions" name="detectQuestionType function detects calculation type questions" time="0.001">
+    <testcase classname="detectQuestionType function detects calculation type questions" name="detectQuestionType function detects calculation type questions" time="0">
     </testcase>
-    <testcase classname="detectSentiment function detects positive sentiment from keywords" name="detectSentiment function detects positive sentiment from keywords" time="0.054">
+    <testcase classname="detectSentiment function detects positive sentiment from keywords" name="detectSentiment function detects positive sentiment from keywords" time="0.019">
     </testcase>
-    <testcase classname="detectSentiment function detects negative sentiment from keywords" name="detectSentiment function detects negative sentiment from keywords" time="0.012">
+    <testcase classname="detectSentiment function detects negative sentiment from keywords" name="detectSentiment function detects negative sentiment from keywords" time="0.003">
     </testcase>
-    <testcase classname="detectSentiment function detects neutral sentiment for questions" name="detectSentiment function detects neutral sentiment for questions" time="0.002">
+    <testcase classname="detectSentiment function detects neutral sentiment for questions" name="detectSentiment function detects neutral sentiment for questions" time="0.001">
     </testcase>
-    <testcase classname="detectSentiment function handles negated positive as negative" name="detectSentiment function handles negated positive as negative" time="0.003">
+    <testcase classname="detectSentiment function handles negated positive as negative" name="detectSentiment function handles negated positive as negative" time="0.001">
     </testcase>
   </testsuite>
-  <testsuite name="Message Service" errors="0" failures="0" skipped="0" timestamp="2025-06-22T18:52:41" time="1.24" tests="2">
-    <testcase classname="Message Service saveMessage calls Message.create with correct data" name="Message Service saveMessage calls Message.create with correct data" time="0.007">
+  <testsuite name="Category detection" errors="0" failures="0" skipped="0" timestamp="2025-06-24T00:54:20" time="0.623" tests="10">
+    <testcase classname="Category detection detects math category correctly" name="Category detection detects math category correctly" time="0.047">
+    </testcase>
+    <testcase classname="Category detection detects science category correctly" name="Category detection detects science category correctly" time="0.006">
+    </testcase>
+    <testcase classname="Category detection detects history category correctly" name="Category detection detects history category correctly" time="0.002">
+    </testcase>
+    <testcase classname="Category detection uses general category for unknown topics" name="Category detection uses general category for unknown topics" time="0.002">
+    </testcase>
+    <testcase classname="Question type detection detects definition questions" name="Question type detection detects definition questions" time="0.002">
+    </testcase>
+    <testcase classname="Question type detection detects explanation questions" name="Question type detection detects explanation questions" time="0.002">
+    </testcase>
+    <testcase classname="Question type detection detects calculation questions" name="Question type detection detects calculation questions" time="0.001">
+    </testcase>
+    <testcase classname="Sentiment analysis detects positive sentiment" name="Sentiment analysis detects positive sentiment" time="0.002">
+    </testcase>
+    <testcase classname="Sentiment analysis detects negative sentiment" name="Sentiment analysis detects negative sentiment" time="0.003">
+    </testcase>
+    <testcase classname="Sentiment analysis defaults to neutral sentiment" name="Sentiment analysis defaults to neutral sentiment" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="API Health Check" errors="0" failures="0" skipped="0" timestamp="2025-06-24T00:54:20" time="1.174" tests="5">
+    <testcase classname="API Health Check GET / returns welcome message" name="API Health Check GET / returns welcome message" time="0.027">
+    </testcase>
+    <testcase classname="API Health Check GET /api/protected without token returns 401" name="API Health Check GET /api/protected without token returns 401" time="0.005">
+    </testcase>
+    <testcase classname="Chat API POST /api/messages returns correct response" name="Chat API POST /api/messages returns correct response" time="0.05">
+    </testcase>
+    <testcase classname="Chat API GET /api/messages returns messages array" name="Chat API GET /api/messages returns messages array" time="0.003">
+    </testcase>
+    <testcase classname="Chat API POST /api/messages with invalid data returns 400" name="Chat API POST /api/messages with invalid data returns 400" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="Message Service" errors="0" failures="0" skipped="0" timestamp="2025-06-24T00:54:20" time="1.277" tests="2">
+    <testcase classname="Message Service saveMessage calls Message.create with correct data" name="Message Service saveMessage calls Message.create with correct data" time="0.011">
     </testcase>
     <testcase classname="Message Service getMessagesByUser returns messages from Message.find" name="Message Service getMessagesByUser returns messages from Message.find" time="0.001">
-    </testcase>
-  </testsuite>
-  <testsuite name="API Health Check" errors="0" failures="0" skipped="0" timestamp="2025-06-22T18:52:41" time="2.986" tests="5">
-    <testcase classname="API Health Check GET / returns welcome message" name="API Health Check GET / returns welcome message" time="0.079">
-    </testcase>
-    <testcase classname="API Health Check GET /api/protected without token returns 401" name="API Health Check GET /api/protected without token returns 401" time="0.01">
-    </testcase>
-    <testcase classname="Chat API POST /api/messages returns correct response" name="Chat API POST /api/messages returns correct response" time="1.503">
-    </testcase>
-    <testcase classname="Chat API GET /api/messages returns messages array" name="Chat API GET /api/messages returns messages array" time="0.009">
-    </testcase>
-    <testcase classname="Chat API POST /api/messages with invalid data returns 400" name="Chat API POST /api/messages with invalid data returns 400" time="0.004">
-    </testcase>
-  </testsuite>
-  <testsuite name="Category detection" errors="0" failures="0" skipped="0" timestamp="2025-06-22T18:52:41" time="18.191" tests="10">
-    <testcase classname="Category detection detects math category correctly" name="Category detection detects math category correctly" time="1.497">
-    </testcase>
-    <testcase classname="Category detection detects science category correctly" name="Category detection detects science category correctly" time="2.558">
-    </testcase>
-    <testcase classname="Category detection detects history category correctly" name="Category detection detects history category correctly" time="0.479">
-    </testcase>
-    <testcase classname="Category detection uses general category for unknown topics" name="Category detection uses general category for unknown topics" time="3.837">
-    </testcase>
-    <testcase classname="Question type detection detects definition questions" name="Question type detection detects definition questions" time="2.833">
-    </testcase>
-    <testcase classname="Question type detection detects explanation questions" name="Question type detection detects explanation questions" time="2.301">
-    </testcase>
-    <testcase classname="Question type detection detects calculation questions" name="Question type detection detects calculation questions" time="1.165">
-    </testcase>
-    <testcase classname="Sentiment analysis detects positive sentiment" name="Sentiment analysis detects positive sentiment" time="0.613">
-    </testcase>
-    <testcase classname="Sentiment analysis detects negative sentiment" name="Sentiment analysis detects negative sentiment" time="1.678">
-    </testcase>
-    <testcase classname="Sentiment analysis defaults to neutral sentiment" name="Sentiment analysis defaults to neutral sentiment" time="0.59">
     </testcase>
   </testsuite>
 </testsuites>

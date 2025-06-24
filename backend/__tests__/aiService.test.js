@@ -1,5 +1,23 @@
-import { generateResponse } from "../aiService.js";
 import { jest } from "@jest/globals";
+// Set dummy MongoDB URI for tests before importing server.js
+process.env.MONGODB_URI = "mock";
+
+// Mock mongoose to avoid real DB connection in tests
+jest.mock("mongoose", () => {
+  const actualMongoose = jest.requireActual("mongoose");
+  return {
+    ...actualMongoose,
+    connect: jest.fn().mockResolvedValue({}),
+    disconnect: jest.fn().mockResolvedValue({}),
+    model: jest.fn(() => ({
+      create: jest.fn().mockResolvedValue({}),
+      find: jest.fn().mockResolvedValue([]),
+      // Add more methods as needed
+    })),
+  };
+});
+
+import { generateResponse } from "../aiService.js";
 
 // Mock the GoogleGenAI class
 jest.mock("@google/genai", () => {

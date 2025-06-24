@@ -1,3 +1,22 @@
+import { jest } from "@jest/globals";
+// Set dummy MongoDB URI for tests before importing server.js
+process.env.MONGODB_URI = "mock";
+
+// Mock mongoose to avoid real DB connection in tests
+jest.mock("mongoose", () => {
+  const actualMongoose = jest.requireActual("mongoose");
+  return {
+    ...actualMongoose,
+    connect: jest.fn().mockResolvedValue({}),
+    disconnect: jest.fn().mockResolvedValue({}),
+    model: jest.fn(() => ({
+      create: jest.fn().mockResolvedValue({}),
+      find: jest.fn().mockResolvedValue([]),
+      // Add more methods as needed
+    })),
+  };
+});
+
 import {
   detectCategory,
   detectQuestionType,
@@ -43,13 +62,13 @@ describe("detectQuestionType function", () => {
 describe("detectSentiment function", () => {
   test("detects positive sentiment from keywords", () => {
     expect(detectSentiment("This is a great explanation, thank you")).toBe(
-      "positive",
+      "positive"
     );
   });
 
   test("detects negative sentiment from keywords", () => {
     expect(detectSentiment("I am disappointed with this answer")).toBe(
-      "negative",
+      "negative"
     );
   });
 

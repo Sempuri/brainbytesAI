@@ -1,4 +1,25 @@
+process.env.MONGODB_URI = "mock";
 import { jest } from "@jest/globals";
+
+beforeAll(() => {
+  process.env.MONGODB_URI = "mock";
+});
+
+// Mock mongoose to avoid real DB connection in tests
+jest.mock("mongoose", () => {
+  const actualMongoose = jest.requireActual("mongoose");
+  return {
+    ...actualMongoose,
+    connect: jest.fn().mockResolvedValue({}),
+    disconnect: jest.fn().mockResolvedValue({}),
+    model: jest.fn(() => ({
+      create: jest.fn().mockResolvedValue({}),
+      find: jest.fn().mockResolvedValue([]),
+      // Add more methods as needed
+    })),
+  };
+});
+
 import * as messageService from "../services/messageService.js";
 import { Message } from "../server.js";
 
