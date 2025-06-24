@@ -56,7 +56,7 @@ await jest.unstable_mockModule("mongoose", () => {
       users.find(
         (u) =>
           (!query.email || u.email === query.email) &&
-          (!query.password || u.password === query.password)
+          (!query.password || u.password === query.password),
       ) || null
     );
   });
@@ -120,7 +120,7 @@ describe("API Health Check", () => {
     expect(response.statusCode).toBe(200);
     expect(response.body).toHaveProperty(
       "message",
-      "Welcome to the BrainBytes API"
+      "Welcome to the BrainBytes API",
     );
   });
 
@@ -155,7 +155,7 @@ describe("Chat API", () => {
     if (!token) {
       throw new Error(
         "No token returned from login. Response: " +
-          JSON.stringify(loginRes.body)
+          JSON.stringify(loginRes.body),
       );
     }
   }, 30000); // 30s timeout for slow DB/network

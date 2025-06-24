@@ -29,7 +29,7 @@ app.use(
       }
     },
     credentials: true,
-  })
+  }),
 );
 
 // Initialize AI model
@@ -92,7 +92,7 @@ const learningMaterialSchema = new mongoose.Schema({
 
 const LearningMaterial = mongoose.model(
   "LearningMaterial",
-  learningMaterialSchema
+  learningMaterialSchema,
 );
 
 const authMiddleware = (req, res, next) => {
@@ -217,7 +217,7 @@ app.post("/api/auth/forgot-password", async (req, res) => {
     // In production, send an email here.
     // For dev, return the reset link in the response:
     const resetLink = `http://localhost:3000/reset-password?token=${token}&email=${encodeURIComponent(
-      email
+      email,
     )}`;
     res.json({
       message: "If this email is registered, a reset link has been sent.",
@@ -254,7 +254,7 @@ app.post("/api/auth/reset-password", async (req, res) => {
 app.get("/api/auth/profile", authMiddleware, async (req, res) => {
   try {
     const user = await UserProfile.findById(req.user.userId).select(
-      "-password"
+      "-password",
     );
     if (!user) {
       return res.status(404).json({ error: "User not found" });
@@ -277,7 +277,7 @@ app.put("/api/auth/profile", authMiddleware, async (req, res) => {
         preferredSubjects,
         updatedAt: Date.now(),
       },
-      { new: true }
+      { new: true },
     ).select("-password");
 
     if (!updatedUser) {
@@ -322,7 +322,7 @@ app.post("/api/messages", authMiddleware, async (req, res) => {
 
     // 2. Generate AI response
     const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error("Request timeout")), 30000)
+      setTimeout(() => reject(new Error("Request timeout")), 30000),
     );
     const aiResultPromise = generateResponse(req.body.text);
     const aiResult = await Promise.race([
@@ -433,7 +433,7 @@ app.put("/api/materials/:id", async (req, res) => {
         content,
         updatedAt: Date.now(),
       },
-      { new: true }
+      { new: true },
     );
 
     if (!updatedMaterial) {
@@ -450,7 +450,7 @@ app.put("/api/materials/:id", async (req, res) => {
 app.delete("/api/materials/:id", async (req, res) => {
   try {
     const deletedMaterial = await LearningMaterial.findByIdAndDelete(
-      req.params.id
+      req.params.id,
     );
 
     if (!deletedMaterial) {
