@@ -181,6 +181,7 @@ jobs:
       ### 1️⃣4️⃣ ARTIFACTS ###
       ### Build artifacts for frontend
       - name: Build frontend for production
+        if: matrix.node-version == '18.x'
         working-directory: frontend
         run: |
           npm run build
@@ -192,6 +193,7 @@ jobs:
           cp package.json build/
           cp next.config.js build/
       - name: Upload frontend build artifact
+        if: matrix.node-version == '18.x'
         uses: actions/upload-artifact@v4
         with:
           name: frontend-build
