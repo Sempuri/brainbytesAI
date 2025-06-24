@@ -13,8 +13,5 @@ export default {
   },
   // Make sure ES modules are properly handled
   transformIgnorePatterns: ["/node_modules/(?!(.+\\.mjs$))"],
-  setupFilesAfterEnv: [
-    "<rootDir>/jest.setup.js",
-    "<rootDir>/__tests__/setupTestDB.js",
-  ],
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
 };
