@@ -45,11 +45,8 @@ export default function Dashboard() {
 
         // Process user message stats (from the messages array)
         analyzeMessages(messagesResponse.data);
-      } catch (error) {
-        // Silenced console.error to avoid lint warning
-        // if (process.env.NODE_ENV === "development") {
-        //   console.error("Error fetching dashboard data:", error);
-        // }
+      } catch {
+        // Silenced error to avoid lint warning
       } finally {
         setLoading(false);
       }
@@ -322,7 +319,7 @@ export default function Dashboard() {
                       }}
                       onClick={() =>
                         router.push(
-                          `/?question=${encodeURIComponent(message.text)}`,
+                          `/?question=${encodeURIComponent(message.text)}`
                         )
                       } // <-- Add this line
                     >

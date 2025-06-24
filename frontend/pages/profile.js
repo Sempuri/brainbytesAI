@@ -39,9 +39,8 @@ export default function Profile() {
           headers: { Authorization: `Bearer ${storedToken}` },
         });
         setUser(response.data);
-      } catch (error) {
-        // Silenced console.error to avoid lint warning
-        // console.error("Error fetching profile:", error);
+      } catch {
+        // Silenced error to avoid lint warning
         setMessage({
           text: "Failed to load profile data. Please login again.",
           type: "error",
@@ -81,7 +80,8 @@ export default function Profile() {
       setUser(response.data);
       setMessage({ text: "Profile updated successfully!", type: "success" });
     } catch (error) {
-      console.error("Error updating profile:", error);
+      // Optionally handle error, or remove console if not needed
+      // console.error("Error updating profile:", error);
       setMessage({
         text: "Failed to update profile. Please try again.",
         type: "error",

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 try {
   if (typeof global.Request === "undefined") {
     global.Request = require("node-fetch").Request;
