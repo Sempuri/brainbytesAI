@@ -6,6 +6,7 @@ const createJestConfig = nextJest({
 
 const customJestConfig = {
   testEnvironment: "jsdom",
+  setupFiles: ["<rootDir>/jest.polyfill.js"],
   setupFilesAfterEnv: ["@testing-library/jest-dom"],
   testPathIgnorePatterns: ["/node_modules/", "/.next/", "/cypress/"],
   moduleNameMapper: {
