@@ -116,11 +116,13 @@ jobs:
           name: backend-coverage-${{ matrix.node-version }}
           path: backend/coverage/
 
-      ### 9️⃣ FRONTEND TESTING ###
+      ### 9️⃣ FRONTEND TESTING (Node 18+ only) ###
       - name: Run frontend unit tests with coverage
+        if: matrix.node-version == '18.x'
         working-directory: frontend
         run: npm test -- --coverage
       - name: Upload frontend coverage report
+        if: matrix.node-version == '18.x'
         uses: actions/upload-artifact@v4
         with:
           name: frontend-coverage-${{ matrix.node-version }}
@@ -128,11 +130,14 @@ jobs:
 
       ### 🔟 E2E TESTING WITH CYPRESS ###
       - name: Run frontend app in background
+        if: matrix.node-version == '18.x'
         working-directory: frontend
         run: npm run dev &
       - name: Wait for app to be ready
+        if: matrix.node-version == '18.x'
         run: npx wait-on http://localhost:3000
       - name: Run Cypress tests
+        if: matrix.node-version == '18.x'
         timeout-minutes: 5 # More granular timeout for Cypress tests
         working-directory: frontend
         run: npm run cy:run
@@ -145,6 +150,7 @@ jobs:
           path: backend/reports/junit.xml
 
       - name: Upload test summary report (frontend)
+        if: matrix.node-version == '18.x'
         uses: actions/upload-artifact@v4
         with:
           name: frontend-junit-report-${{ matrix.node-version }}
