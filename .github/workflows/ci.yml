@@ -113,7 +113,7 @@ jobs:
       - name: Upload backend coverage report
         uses: actions/upload-artifact@v4
         with:
-          name: backend-coverage
+          name: backend-coverage-${{ matrix.node-version }}
           path: backend/coverage/
 
       ### 9️⃣ FRONTEND TESTING ###
@@ -123,7 +123,7 @@ jobs:
       - name: Upload frontend coverage report
         uses: actions/upload-artifact@v4
         with:
-          name: frontend-coverage
+          name: frontend-coverage-${{ matrix.node-version }}
           path: frontend/coverage/
 
       ### 🔟 E2E TESTING WITH CYPRESS ###
@@ -141,13 +141,13 @@ jobs:
       - name: Upload test summary report (backend)
         uses: actions/upload-artifact@v4
         with:
-          name: backend-junit-report
+          name: backend-junit-report-${{ matrix.node-version }}
           path: backend/reports/junit.xml
 
       - name: Upload test summary report (frontend)
         uses: actions/upload-artifact@v4
         with:
-          name: frontend-junit-report
+          name: frontend-junit-report-${{ matrix.node-version }}
           path: frontend/reports/junit.xml
 
       - name: Publish Test Report
