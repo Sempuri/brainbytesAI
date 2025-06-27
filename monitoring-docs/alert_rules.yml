@@ -1,0 +1,20 @@
+groups:
+  - name: brainbytes_alerts
+    rules:
+      - alert: HighAIResponseTime
+        expr: avg(brainbytes_ai_response_time_seconds) > 2
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High average AI response time"
+          description: "The average AI response time exceeded 2 seconds."
+
+      - alert: LowActiveSessions
+        expr: brainbytes_active_sessions < 1
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "No active learning sessions detected"
+          description: "There are no active BrainBytes sessions running."

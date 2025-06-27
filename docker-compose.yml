@@ -1,5 +1,16 @@
 version: "3"
 services:
+  # Prometheus
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring-docs/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./monitoring-docs/recording_rules.yml:/etc/prometheus/recording_rules.yml
+      - ./monitoring-docs/alert_rules.yml:/etc/prometheus/alert_rules.yml
+
   # Frontend container
   frontend:
     environment:
@@ -36,6 +47,7 @@ services:
       - GEMINI_API_KEY=${GEMINI_API_KEY}
     depends_on:
       - mongo
+      - prometheus
     restart: unless-stopped
 
   # MongoDB container
@@ -47,6 +59,13 @@ services:
       - mongo-data:/data/db
     restart: unless-stopped
 
+  node-exporter:
+    image: prom/node-exporter
+    container_name: node-exporter
+    ports:
+      - "9100:9100"
+
 # Define volumes for persistent data
 volumes:
   mongo-data:
+

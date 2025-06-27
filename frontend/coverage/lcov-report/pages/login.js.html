@@ -255,16 +255,15 @@
 <a name='L190'></a><a href='#L190'>190</a>
 <a name='L191'></a><a href='#L191'>191</a>
 <a name='L192'></a><a href='#L192'>192</a>
-<a name='L193'></a><a href='#L193'>193</a>
-<a name='L194'></a><a href='#L194'>194</a>
-<a name='L195'></a><a href='#L195'>195</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L193'></a><a href='#L193'>193</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -276,9 +275,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -358,7 +354,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -392,6 +387,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -452,9 +448,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState } from "react";
-import axios from "axios";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import api from "../utils/api";
+import { setAuthToken } from "../utils/api";
 &nbsp;
 export default function Login() {
   const router = useRouter();
@@ -469,10 +466,7 @@ export default function Login() {
 <span class="cstat-no" title="statement not covered" >    setError("");</span>
 <span class="cstat-no" title="statement not covered" >    setLoading(true);</span>
 <span class="cstat-no" title="statement not covered" >    try {</span>
-      const { data } = <span class="cstat-no" title="statement not covered" >await axios.post(</span>
-        "http://localhost:3000/api/auth/login",
-        { email, password },
-      );
+      const { data } = <span class="cstat-no" title="statement not covered" >await api.post("/api/auth/login", { email, password });</span>
       // Save token and user to localStorage
 <span class="cstat-no" title="statement not covered" >      localStorage.setItem("token", data.token);</span>
 <span class="cstat-no" title="statement not covered" >      localStorage.setItem("user", JSON.stringify(data.user));</span>
@@ -511,17 +505,16 @@ export default function Login() {
         }}
       &gt;
         &lt;div style={{ textAlign: "center", marginBottom: "2rem" }}&gt;
-          &lt;Link href={router.pathname === "/login" ? "/login" : <span class="branch-1 cbranch-no" title="branch not covered" >"/"}</span>&gt;
-            &lt;a
-              style={{
-                fontSize: "24px",
-                fontWeight: "bold",
-                color: "#2196f3",
-                textDecoration: "none",
-              }}
-            &gt;
-              BrainBytes AI
-            &lt;/a&gt;
+          &lt;Link
+            href={router.pathname === "/login" ? "/login" : <span class="branch-1 cbranch-no" title="branch not covered" >"/"}</span>
+            style={{
+              fontSize: "24px",
+              fontWeight: "bold",
+              color: "#2196f3",
+              textDecoration: "none",
+            }}
+          &gt;
+            BrainBytes AI
           &lt;/Link&gt;
         &lt;/div&gt;
 &nbsp;
@@ -635,10 +628,11 @@ export default function Login() {
           style={{ textAlign: "center", marginTop: "1.5rem", fontSize: "14px" }}
         &gt;
           New to BrainBytes AI?{" "}
-          &lt;Link href="/register"&gt;
-            &lt;a style={{ color: "#2196f3", textDecoration: "none" }}&gt;
-              Create an account
-            &lt;/a&gt;
+          &lt;Link
+            href="/register"
+            style={{ color: "#2196f3", textDecoration: "none" }}
+          &gt;
+            Create an account
           &lt;/Link&gt;
         &lt;/div&gt;
       &lt;/div&gt;
@@ -652,7 +646,7 @@ export default function Login() {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-06-14T23:59:13.598Z
+                at 2025-06-17T17:35:05.374Z
             </div>
         <script src="../prettify.js"></script>
         <script>

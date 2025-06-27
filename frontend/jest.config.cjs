@@ -1,8 +1,8 @@
 module.exports = {
-  testEnvironment: 'jsdom',
-  setupFilesAfterEnv: ['@testing-library/jest-dom'],
-  testPathIgnorePatterns: ['/node_modules/', '/.next/', '/cypress/'],
-  transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
+  testEnvironment: "jsdom",
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/$1",
   },
 };

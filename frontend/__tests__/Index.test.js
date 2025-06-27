@@ -37,6 +37,10 @@ axios.get.mockImplementation((url) => {
   return Promise.resolve({ data: {} });
 });
 
+jest.mock("../utils/api", () => ({
+  get: jest.fn(() => Promise.resolve({ data: { user: "Test User" } })),
+}));
+
 // Mock localStorage to prevent test errors
 Object.defineProperty(window, "localStorage", {
   value: {

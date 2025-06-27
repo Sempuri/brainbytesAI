@@ -6,10 +6,16 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import { generateResponse } from "./aiService.js"; // Note the .js extension is required
+import chatRoutes from './chatRoutes.js';
+import bodyParser from 'body-parser';
+import { aiResponses, activeSessions, responseTime, register } from './metrics/metrics.js';
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const mongoURI = process.env.MONGO_URI || "mongodb://localhost:27017/brainbytes";
 const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
+
 
 // Middleware
 app.use(
@@ -19,6 +25,17 @@ app.use(
   })
 );
 app.use(express.json());
+app.use("/api/chat", chatRoutes);
+
+// Prometheus metrics endpoint
+app.get('/metrics', async (req, res) => {
+  try {
+    res.set('Content-Type', register.contentType);
+    res.end(await register.metrics());
+  } catch (err) {
+    res.status(500).send('Failed to collect metrics');
+  }
+});
 
 // Initialize AI model
 //aiService.initializeAI();
@@ -49,7 +66,7 @@ const messageSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "UserProfile" },
 });
 
-const Message = mongoose.model("Message", messageSchema);
+//const Message = mongoose.model("Message", messageSchema);//
 
 // User Profile Schema
 const userProfileSchema = new mongoose.Schema({
@@ -104,6 +121,27 @@ app.get("/api/protected", authMiddleware, (req, res) => {
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to the BrainBytes API" });
 });
+
+// Metrics Route
+app.post('/api/ask-ai', async (req, res) => {
+  const end = responseTime.startTimer(); // Start histogram timer
+  activeSessions.inc(); // Simulate active session start
+
+  try {
+    // Simulate AI logic
+    await new Promise(resolve => setTimeout(resolve, 400)); // Mock delay
+    aiResponses.inc({ status: 'success' });
+
+    res.json({ response: 'AI response here' });
+  } catch (error) {
+    aiResponses.inc({ status: 'error' });
+    res.status(500).send('Error');
+  } finally {
+    activeSessions.dec(); // Session ends
+    end(); // Stop histogram timer
+  }
+});
+
 
 // Register Route
 app.post("/api/auth/register", async (req, res) => {
@@ -447,6 +485,22 @@ app.get("/api/health", (req, res) => {
     time: new Date().toISOString(),
     environment: process.env.NODE_ENV || "development",
   });
+});
+
+// Prometheus metrics endpoint
+app.get('/simulate-metrics', (req, res) => {
+  const status = req.query.status || 'success';
+  const delay = parseInt(req.query.delay) || 500;
+
+  aiResponses.labels(status).inc();
+  activeSessions.inc();
+
+  const end = responseTime.startTimer();
+  setTimeout(() => {
+    end();
+    activeSessions.dec();
+    res.send(`Metrics simulated with status=${status} and delay=${delay}`);
+  }, delay);
 });
 
 // Start the server (only if not in test)
