@@ -1,0 +1,8 @@
+groups:
+  - name: brainbytes_recording_rules
+    rules:
+      - record: job:ai_response_avg_seconds
+        expr: avg(rate(brainbytes_ai_response_time_seconds_sum[1m]))
+
+      - record: job:active_sessions_max
+        expr: max(brainbytes_active_sessions)
