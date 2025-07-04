@@ -18,3 +18,45 @@ groups:
         annotations:
           summary: "No active learning sessions detected"
           description: "There are no active BrainBytes sessions running."
+
+  - name: app-alerts
+    rules:
+      # Layered alerting: Warning
+      - alert: HighErrorRateWarning
+        expr: sum(increase(api_http_errors_total[5m])) by (endpoint) > 5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High error rate (warning)"
+          description: "More than 5 errors in 5 minutes for {{ $labels.endpoint }}"
+
+      # Layered alerting: Critical
+      - alert: HighErrorRateCritical
+        expr: sum(increase(api_http_errors_total[2m])) by (endpoint) > 20
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High error rate (critical)"
+          description: "More than 20 errors in 2 minutes for {{ $labels.endpoint }}"
+
+      # Business-level: AI response time degradation
+      - alert: AIResponseTimeDegraded
+        expr: histogram_quantile(0.95, sum(rate(brainbytes_ai_response_time_seconds_bucket[5m])) by (le)) > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "AI response time degraded"
+          description: "95th percentile AI response time > 2s for 5 minutes"
+
+      # Business-level: Unusual session data
+      - alert: UnusualSessionDrop
+        expr: increase(brainbytes_active_sessions[5m]) < 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Unusual drop in active sessions"
+          description: "Active sessions dropped unexpectedly in the last 5 minutes"
