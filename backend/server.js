@@ -6,9 +6,10 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import { generateResponse } from "./aiService.js"; // Note the .js extension is required
-import chatRoutes from './chatRoutes.js';
+// import chatRoutes from './chatRoutes.js';
 import bodyParser from 'body-parser';
 import { aiResponses, activeSessions, responseTime, register } from './metrics/metrics.js';
+import client from 'prom-client';
 
 
 const app = express();
@@ -16,6 +17,12 @@ const PORT = process.env.PORT || 3000;
 const mongoURI = process.env.MONGO_URI || "mongodb://localhost:27017/brainbytes";
 const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
 
+// Create a counter metric for HTTP errors
+const httpErrorCounter = new client.Counter({
+  name: 'api_http_errors_total',
+  help: 'Total number of HTTP errors',
+  labelNames: ['endpoint', 'status']
+});
 
 // Middleware
 app.use(
@@ -25,16 +32,12 @@ app.use(
   })
 );
 app.use(express.json());
-app.use("/api/chat", chatRoutes);
+// app.use("/api/chat", chatRoutes);
 
 // Prometheus metrics endpoint
 app.get('/metrics', async (req, res) => {
-  try {
-    res.set('Content-Type', register.contentType);
-    res.end(await register.metrics());
-  } catch (err) {
-    res.status(500).send('Failed to collect metrics');
-  }
+  res.set('Content-Type', client.register.contentType);
+  res.end(await client.register.metrics());
 });
 
 // Initialize AI model
@@ -135,8 +138,8 @@ app.post('/api/ask-ai', async (req, res) => {
     res.json({ response: 'AI response here' });
   } catch (error) {
     aiResponses.inc({ status: 'error' });
-    res.status(500).send('Error');
-  } finally {
+    next(error); // This will trigger the error-handling middleware
+  }finally {
     activeSessions.dec(); // Session ends
     end(); // Stop histogram timer
   }
@@ -501,6 +504,18 @@ app.get('/simulate-metrics', (req, res) => {
     activeSessions.dec();
     res.send(`Metrics simulated with status=${status} and delay=${delay}`);
   }, delay);
+});
+
+// Test error route for Prometheus error metric
+app.get('/test-error', (req, res) => {
+  httpErrorCounter.inc({ endpoint: '/test-error', status: 500 });
+  res.status(500).send('Test error');
+});
+
+// Error-handling middleware for Prometheus error counter
+app.use((err, req, res, next) => {
+  httpErrorCounter.inc({ endpoint: req.path, status: res.statusCode });
+  next(err);
 });
 
 // Start the server (only if not in test)

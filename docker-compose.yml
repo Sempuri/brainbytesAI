@@ -65,6 +65,21 @@ services:
     ports:
       - "9100:9100"
 
+  # Grafana service
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3002:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./monitoring-docs/grafana/provisioning:/etc/grafana/provisioning
+      - ./monitoring-docs/grafana/dashboards:/var/lib/grafana/dashboards
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+
 # Define volumes for persistent data
 volumes:
   mongo-data:
