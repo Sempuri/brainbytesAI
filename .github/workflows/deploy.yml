@@ -1,9 +1,9 @@
 # .github/workflows/deploy.yml
-name: BrainBytes Deploy
+name: BrainBytes Deploy – Docker & Env Check
 
 on:
   push:
-    branches: [master, development]
+    branches: [master, development, test-master]
   workflow_dispatch:
     inputs:
       environment:

@@ -1,10 +1,10 @@
-name: BrainBytes CI
+name: BrainBytes CI – Lint & Unit Tests
 
 on:
   push:
-    branches: [main, development]
+    branches: [master, development, test-master]
   pull_request:
-    branches: [main, development]
+    branches: [master, development, test-master]
   workflow_dispatch:
 
 jobs:

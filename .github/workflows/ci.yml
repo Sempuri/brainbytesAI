@@ -1,10 +1,10 @@
-name: CI/CD Pipeline
+name: BrainBytes CI/CD – Full Pipeline & Artifact Builder
 
 on:
   push:
-    branches: [master, development]
+    branches: [master, development, test-master]
   pull_request:
-    branches: [master, development]
+    branches: [master, development, test-master]
 
 permissions:
   contents: read
