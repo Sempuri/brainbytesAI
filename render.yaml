@@ -23,4 +23,4 @@ services:
     plan: free
     envVars:
       - key: NEXT_PUBLIC_API_URL
-        value: https://brainbytes.onrender.com
+        value: https://brainbytes-ai-backend.onrender.com
