@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: brainbytes-backend
+    name: brainbytes-AI-backend
     env: docker
     dockerfilePath: backend/Dockerfile
     autoDeploy: true
@@ -15,7 +15,7 @@ services:
         sync: false
 
   - type: web
-    name: brainbytes-frontend
+    name: brainbytes-AI
     env: docker
     dockerfilePath: frontend/Dockerfile
     autoDeploy: true
