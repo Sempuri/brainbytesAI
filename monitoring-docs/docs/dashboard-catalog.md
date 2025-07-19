@@ -6,6 +6,7 @@
 Analyze error patterns and distribution to quickly identify problematic endpoints and times.
 
 **Key Metrics & Visualizations:**
+
 - Error distribution by endpoint  
   ![](../screenshots/Error%20Analysis%20Screenshots/ErrorDistributionbyEndpoint.png)
 - Error distribution by status code  
@@ -22,7 +23,8 @@ Analyze error patterns and distribution to quickly identify problematic endpoint
 **Target Audience:**  
 Developers, SREs, QA
 
-**Use Cases:**  
+**Use Cases:**
+
 - Quickly spot which endpoints are failing most
 - Identify error spikes by time
 - Correlate errors with CPU/memory issues
@@ -35,6 +37,7 @@ Developers, SREs, QA
 Monitor and optimize resource usage across services and containers.
 
 **Key Metrics & Visualizations:**
+
 - Resource efficiency metrics  
   ![](../screenshots/Resource%20Optimization%20Screenshots/ResourceEfficiency.png)
 - Resource usage vs. request volume  
@@ -53,7 +56,8 @@ Monitor and optimize resource usage across services and containers.
 **Target Audience:**  
 DevOps, SREs, Infrastructure
 
-**Use Cases:**  
+**Use Cases:**
+
 - Identify resource bottlenecks
 - Track efficiency per container/service
 - Monitor for resource spikes or anomalies

@@ -7,21 +7,22 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import { generateResponse } from "./aiService.js"; // Note the .js extension is required
 // import chatRoutes from './chatRoutes.js';
-import bodyParser from 'body-parser';
-import { aiResponses, activeSessions, responseTime, register } from './metrics/metrics.js';
-import client from 'prom-client';
-
+import {
+  aiResponses,
+  activeSessions,
+  responseTime,
+} from "./metrics/metrics.js"; // Removed unused 'register'
+import client from "prom-client";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const mongoURI = process.env.MONGO_URI || "mongodb://localhost:27017/brainbytes";
 const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
 
 // Create a counter metric for HTTP errors
 const httpErrorCounter = new client.Counter({
-  name: 'api_http_errors_total',
-  help: 'Total number of HTTP errors',
-  labelNames: ['endpoint', 'status']
+  name: "api_http_errors_total",
+  help: "Total number of HTTP errors",
+  labelNames: ["endpoint", "status"],
 });
 
 // Middleware
@@ -29,14 +30,14 @@ app.use(
   cors({
     origin: "http://localhost:8080", // or "*" for dev, but see below
     credentials: true,
-  })
+  }),
 );
 app.use(express.json());
 // app.use("/api/chat", chatRoutes);
 
 // Prometheus metrics endpoint
-app.get('/metrics', async (req, res) => {
-  res.set('Content-Type', client.register.contentType);
+app.get("/metrics", async (req, res) => {
+  res.set("Content-Type", client.register.contentType);
   res.end(await client.register.metrics());
 });
 
@@ -69,7 +70,7 @@ const messageSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "UserProfile" },
 });
 
-//const Message = mongoose.model("Message", messageSchema);//
+const Message = mongoose.model("Message", messageSchema); // Define Message model
 
 // User Profile Schema
 const userProfileSchema = new mongoose.Schema({
@@ -96,7 +97,7 @@ const learningMaterialSchema = new mongoose.Schema({
 
 const LearningMaterial = mongoose.model(
   "LearningMaterial",
-  learningMaterialSchema
+  learningMaterialSchema,
 );
 
 const authMiddleware = (req, res, next) => {
@@ -126,25 +127,25 @@ app.get("/", (req, res) => {
 });
 
 // Metrics Route
-app.post('/api/ask-ai', async (req, res) => {
+app.post("/api/ask-ai", async (req, res, next) => {
+  // Add 'next' param
   const end = responseTime.startTimer(); // Start histogram timer
   activeSessions.inc(); // Simulate active session start
 
   try {
     // Simulate AI logic
-    await new Promise(resolve => setTimeout(resolve, 400)); // Mock delay
-    aiResponses.inc({ status: 'success' });
+    await new Promise((resolve) => setTimeout(resolve, 400)); // Mock delay
+    aiResponses.inc({ status: "success" });
 
-    res.json({ response: 'AI response here' });
+    res.json({ response: "AI response here" });
   } catch (error) {
-    aiResponses.inc({ status: 'error' });
+    aiResponses.inc({ status: "error" });
     next(error); // This will trigger the error-handling middleware
-  }finally {
+  } finally {
     activeSessions.dec(); // Session ends
     end(); // Stop histogram timer
   }
 });
-
 
 // Register Route
 app.post("/api/auth/register", async (req, res) => {
@@ -242,7 +243,7 @@ app.post("/api/auth/forgot-password", async (req, res) => {
     // In production, send an email here.
     // For dev, return the reset link in the response:
     const resetLink = `http://localhost:3000/reset-password?token=${token}&email=${encodeURIComponent(
-      email
+      email,
     )}`;
     res.json({
       message: "If this email is registered, a reset link has been sent.",
@@ -279,7 +280,7 @@ app.post("/api/auth/reset-password", async (req, res) => {
 app.get("/api/auth/profile", authMiddleware, async (req, res) => {
   try {
     const user = await UserProfile.findById(req.user.userId).select(
-      "-password"
+      "-password",
     );
     if (!user) {
       return res.status(404).json({ error: "User not found" });
@@ -302,7 +303,7 @@ app.put("/api/auth/profile", authMiddleware, async (req, res) => {
         preferredSubjects,
         updatedAt: Date.now(),
       },
-      { new: true }
+      { new: true },
     ).select("-password");
 
     if (!updatedUser) {
@@ -340,7 +341,7 @@ app.post("/api/messages", authMiddleware, async (req, res) => {
 
     // 2. Generate AI response
     const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error("Request timeout")), 30000)
+      setTimeout(() => reject(new Error("Request timeout")), 30000),
     );
     const aiResultPromise = generateResponse(req.body.text);
     const aiResult = await Promise.race([
@@ -451,7 +452,7 @@ app.put("/api/materials/:id", async (req, res) => {
         content,
         updatedAt: Date.now(),
       },
-      { new: true }
+      { new: true },
     );
 
     if (!updatedMaterial) {
@@ -468,7 +469,7 @@ app.put("/api/materials/:id", async (req, res) => {
 app.delete("/api/materials/:id", async (req, res) => {
   try {
     const deletedMaterial = await LearningMaterial.findByIdAndDelete(
-      req.params.id
+      req.params.id,
     );
 
     if (!deletedMaterial) {
@@ -491,8 +492,8 @@ app.get("/api/health", (req, res) => {
 });
 
 // Prometheus metrics endpoint
-app.get('/simulate-metrics', (req, res) => {
-  const status = req.query.status || 'success';
+app.get("/simulate-metrics", (req, res) => {
+  const status = req.query.status || "success";
   const delay = parseInt(req.query.delay) || 500;
 
   aiResponses.labels(status).inc();
@@ -507,9 +508,9 @@ app.get('/simulate-metrics', (req, res) => {
 });
 
 // Test error route for Prometheus error metric
-app.get('/test-error', (req, res) => {
-  httpErrorCounter.inc({ endpoint: '/test-error', status: 500 });
-  res.status(500).send('Test error');
+app.get("/test-error", (req, res) => {
+  httpErrorCounter.inc({ endpoint: "/test-error", status: 500 });
+  res.status(500).send("Test error");
 });
 
 // Error-handling middleware for Prometheus error counter
@@ -526,3 +527,4 @@ if (process.env.NODE_ENV !== "test") {
 }
 
 export default app; // Export app for Supertest
+export { Message, UserProfile, LearningMaterial };

@@ -19,3 +19,4 @@ This directory contains a simulation script (`simulate.js`) used to test Prometh
 
 ```bash
 node simulate.js
+```
