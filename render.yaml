@@ -1,7 +1,7 @@
 services:
   - type: web
     name: brainbytes-backend
-    env: docker
+    runtime: docker
     dockerfilePath: backend/Dockerfile
     autoDeploy: true
     startCommand: "node server.js"
@@ -16,7 +16,7 @@ services:
 
   - type: web
     name: brainbytes-frontend
-    env: docker
+    runtime: docker
     dockerfilePath: frontend/Dockerfile
     autoDeploy: true
     startCommand: "npm run start"

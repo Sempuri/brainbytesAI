@@ -3,7 +3,7 @@ name: BrainBytes Deploy
 
 on:
   push:
-    branches: [master, development]
+    branches: [master, development, test-main]
   workflow_dispatch:
     inputs:
       environment:

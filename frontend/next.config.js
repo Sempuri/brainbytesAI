@@ -3,13 +3,13 @@ module.exports = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  experimental: {
+  /*experimental: {
     output: "standalone",
   },
   serverOptions: {
     hostname: "0.0.0.0",
     port: 3000,
-  },
+  },*/
   env: {
     NEXT_PUBLIC_API_URL: "https://brainbytes.onrender.com",
   },
