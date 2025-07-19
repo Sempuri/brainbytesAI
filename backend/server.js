@@ -26,13 +26,25 @@ const httpErrorCounter = new client.Counter({
 });
 
 // Middleware
+app.use(express.json());
+
+const allowedOrigins = [
+  "http://localhost:8080",
+  "https://brainbytes-ai.onrender.com", // deployed frontend
+];
+
 app.use(
   cors({
-    origin: "http://localhost:8080", // or "*" for dev, but see below
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, origin);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   }),
 );
-app.use(express.json());
 // app.use("/api/chat", chatRoutes);
 
 // Prometheus metrics endpoint
@@ -45,18 +57,22 @@ app.get("/metrics", async (req, res) => {
 //aiService.initializeAI();
 
 // Connect to MongoDB
-mongoose
-  .connect("mongodb://mongo:27017/brainbytes", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    retryWrites: true,
-  })
-  .then(() => {
-    console.log("Connected to MongoDB");
-  })
-  .catch((err) => {
-    console.error("Failed to connect to MongoDB:", err);
-  });
+if (process.env.NODE_ENV !== "test") {
+  const mongoUri = process.env.MONGODB_URI;
+  if (!mongoUri) throw new Error("Missing MONGODB_URI");
+  mongoose
+    .connect(mongoUri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      retryWrites: true,
+    })
+    .then(() => {
+      console.log("Connected to MongoDB");
+    })
+    .catch((err) => {
+      console.error("Failed to connect to MongoDB:", err);
+    });
+}
 
 // Define schemas
 // Message schema
