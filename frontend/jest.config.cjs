@@ -14,6 +14,16 @@ const customJestConfig = {
     "^react-markdown$": "<rootDir>/__mocks__/react-markdown.js",
     "^next/router$": "<rootDir>/__mocks__/next/router.js",
   },
+  reporters: [
+    "default",
+    [
+      "jest-junit",
+      {
+        outputDirectory: "reports",
+        outputName: "junit.xml",
+      },
+    ],
+  ],
 };
 
 module.exports = createJestConfig(customJestConfig);
