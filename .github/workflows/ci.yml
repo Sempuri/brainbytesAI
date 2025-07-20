@@ -218,9 +218,18 @@ jobs:
           path: backend/build/
           retention-days: 7
 
-      ### 1️⃣5️⃣ DEPLOYMENT PLACEHOLDER ###
-      - name: Deploy to test environment
-        run: echo "Deploying to test environment (to be implemented)"
+      ### 1️⃣5️⃣ DEPLOY TO RENDER ###
+      - name: Deploy brainbytes-AI-backend to Render
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.RENDER_BACKEND_SERVICE_ID }}
+          api-key: ${{ secrets.RENDER_API_KEY }}
+
+      - name: Deploy brainbytes-AI (frontend) to Render
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.RENDER_FRONTEND_SERVICE_ID }}
+          api-key: ${{ secrets.RENDER_API_KEY }}
 
       ### 1️⃣6️⃣ STATUS NOTIFICATION ###
       # Commented out — enable when ready to notify on failures
