@@ -34,6 +34,44 @@ This diagram shows:
 - Docker containers for frontend, backend, and database
 - Data flow and service interactions across the stack
 
+---
+
+## Monitoring & Observability
+
+BrainBytes includes a robust monitoring stack using **Prometheus** and **Grafana** to provide real-time visibility into system health, performance, and usage.
+
+### Monitoring Features
+
+- **Prometheus** scrapes metrics from the backend (API, database, AI service) and system containers.
+- **Grafana** provides dashboards for live visualization of key metrics (API latency, error rates, user activity, resource usage).
+- **Alerting** is configured for critical conditions (e.g., backend/API downtime, high error rates, resource exhaustion).
+- **Custom Metrics**: The backend exposes application-level metrics (request count, response time, error count, etc.) at `/metrics`.
+- **Prebuilt Dashboards**: Ready-to-use Grafana dashboards for API, database, and system monitoring.
+
+### Quick Start: Monitoring Stack
+
+1. **Start Monitoring Services**
+   - Prometheus and Grafana are included in `docker-compose.yml`.
+   - They start automatically with `docker-compose up`.
+2. **Access Grafana Dashboards**
+   - Open [http://localhost:3001](http://localhost:3002) in your browser.
+   - Default login: `admin` / `admin` (change after first login).
+   - Explore dashboards for API, database, and system metrics.
+3. **Prometheus UI**
+   - Open [http://localhost:9090](http://localhost:9090) to view Prometheus targets and query metrics.
+4. **Custom Metrics Endpoint**
+   - The backend exposes metrics at [http://localhost:3000/metrics](http://localhost:3000/metrics).
+5. **Alerts**
+   - Alert rules are defined in `monitoring-docs/alert_rules.yml` and loaded by Prometheus.
+
+### Monitoring Documentation
+
+All monitoring documentation (setup guide, operations manual, performance guidelines, alerting, and dashboards) is available in the project Google Drive folder:
+
+**[BrainBytes Monitoring Docs (Google Drive)](https://drive.google.com/drive/folders/1MFcp8QTUSEwF9qTrCrx9ppjB0QusO0XF?usp=drive_link)**
+
+---
+
 ## Instructions for Running the Application
 
 <h3>Method 1: ZIP Download &amp; Docker Compose</h3>
@@ -205,6 +243,7 @@ git checkout development
 ### Messages API
 
 - **Endpoint**: /api/messages
+
   - **Method**: GET
   - **Description**: Get all chat messages
   - **Request Body**: None
@@ -345,24 +384,28 @@ git checkout development
 ### Learning Materials API
 
 - **Endpoint**: /api/materials
+
   - **Method**: GET
   - **Description**: Get all learning materials
   - **Request Body**: None
   - **Response**: Array of material objects
 
 - **Endpoint**: /api/materials
+
   - **Method**: POST
   - **Description**: Create a new material
   - **Request Body**: Material data
   - **Response**: Created material object
 
 - **Endpoint**: /api/materials/:id
+
   - **Method**: GET
   - **Description**: Get a specific material
   - **Request Body**: None
   - **Response**: Material object
 
 - **Endpoint**: /api/materials/:id
+
   - **Method**: PUT
   - **Description**: Update a learning material
   - **Request Body**: Updated material data
