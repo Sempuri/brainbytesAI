@@ -243,7 +243,6 @@ git checkout development
 ### Messages API
 
 - **Endpoint**: /api/messages
-
   - **Method**: GET
   - **Description**: Get all chat messages
   - **Request Body**: None
@@ -384,28 +383,24 @@ git checkout development
 ### Learning Materials API
 
 - **Endpoint**: /api/materials
-
   - **Method**: GET
   - **Description**: Get all learning materials
   - **Request Body**: None
   - **Response**: Array of material objects
 
 - **Endpoint**: /api/materials
-
   - **Method**: POST
   - **Description**: Create a new material
   - **Request Body**: Material data
   - **Response**: Created material object
 
 - **Endpoint**: /api/materials/:id
-
   - **Method**: GET
   - **Description**: Get a specific material
   - **Request Body**: None
   - **Response**: Material object
 
 - **Endpoint**: /api/materials/:id
-
   - **Method**: PUT
   - **Description**: Update a learning material
   - **Request Body**: Updated material data
