@@ -234,7 +234,7 @@ export default function Home() {
           }}
         >
           <p style={{ margin: "0" }}>
-            Welcome to BrainBytes Bro, <strong>{user.name}</strong>!
+            Welcome to BrainBytes Broski, <strong>{user.name}</strong>!
           </p>
         </div>
       )}
